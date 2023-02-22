@@ -1,0 +1,228 @@
+<link rel="stylesheet" href="{{ 'section-lookbook.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'section-lookbook.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="lookbook color-{{ section.settings.color_scheme }}">
+  <div class="lookbook__wrapper content-container {% if section.settings.full_width %}page-width{% endif %} {% if section.settings.full_width %}rich-text--full-width content-container--full-width{% endif %} section-{{ section.id }}-padding">
+    {% if section.settings.title != blank %}
+      <h2 class="lookbook__heading {{ section.settings.content_alignment }}">
+        {{ section.settings.title | replace: 'p>', 'span>' }}
+      </h2>
+    {%- endif -%}
+        
+    <div class="lookbook__blocks {{ section.settings.content_alignment }}">
+      {%- if section.settings.image_1 != blank -%}
+        <div class="banner__media media modal-window--button">
+          {%- liquid
+            assign image_height = section.settings.image_1.width | divided_by: section.settings.image_1.aspect_ratio
+          -%}
+          {{
+            section.settings.image_1
+            | image_url: width: 3840
+            | image_tag:
+              loading: 'lazy',
+              width: section.settings.image_1.width,
+              height: image_height,
+              class: image_class,
+              widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+          }}
+
+          <div class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <p>Some text in the Modal..</p>
+              modal1
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.image_2 != blank -%}
+        <div class="banner__media media modal-window--button">
+          {%- liquid
+            assign image_height = section.settings.image_2.width | divided_by: section.settings.image_2.aspect_ratio
+          -%}
+          {{
+            section.settings.image_2
+            | image_url: width: 3840
+            | image_tag:
+              loading: 'lazy',
+              width: section.settings.image_2.width,
+              height: image_height,
+              class: image_class,
+              widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+          }}
+          <div class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <p>Some text in the Modal..</p>
+              modal2
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.image_3 != blank -%}
+        <div class="banner__media media modal-window--button">
+          {%- liquid
+            assign image_height = section.settings.image_3.width | divided_by: section.settings.image_3.aspect_ratio
+          -%}
+          {{
+            section.settings.image_3
+            | image_url: width: 3840
+            | image_tag:
+              loading: 'lazy',
+              width: section.settings.image_3.width,
+              height: image_height,
+              class: image_class,
+              widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+          }}
+
+          <div class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <p>Some text in the Modal..</p>
+              modal3
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+</script>
+
+{% schema %}
+{
+  "name": "Lookbook",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "t:sections.image-banner.settings.image.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "t:sections.image-banner.settings.image.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "t:sections.image-banner.settings.image.label"
+    },
+
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.rich-text.settings.content_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.rich-text.settings.content_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.rich-text.settings.content_alignment.options__3.label"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.rich-text.settings.content_alignment.label"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": true,
+      "label": "t:sections.rich-text.settings.full_width.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 52
+    }
+  ],
+  "blocks": [
+
+  ],
+  "presets": [
+    {
+      "name": "Lookbook"
+    }
+  ]
+}
+{% endschema %}
